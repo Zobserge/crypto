@@ -1841,6 +1841,7 @@ input[type=password]:focus::placeholder {
 
 .banner::after {
   position: absolute;
+  z-index: -1;
   top: -6.25rem;
   right: 0;
   content: "";
@@ -2034,7 +2035,7 @@ input[type=password]:focus::placeholder {
   width: 1.5rem !important;
   height: 0.125rem !important;
   outline: none !important;
-  background-color: #4D4F55;
+  background-color: #4d4f55;
   border: none;
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -2117,6 +2118,10 @@ input[type=password]:focus::placeholder {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   color: #ADB3BF;
+}
+
+.tr-tit-item a:hover {
+  color: #4b8ef4;
 }
 
 /* ---------- */
@@ -2288,6 +2293,7 @@ input[type=password]:focus::placeholder {
 
 .b4-tr::after {
   position: absolute;
+  z-index: -1;
   top: 0;
   right: 0;
   content: "";
@@ -2367,7 +2373,7 @@ input[type=password]:focus::placeholder {
 
 .reason__info .num span {
   font-size: 24px;
-  color: #272A34;
+  color: #272a34;
   line-height: 100%;
 }
 
@@ -2797,6 +2803,16 @@ input[type=password]:focus::placeholder {
   height: 1.5rem;
 }
 
+.footer__social .social__col a img {
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.footer__social .social__col a:hover img {
+  opacity: 0.5;
+}
+
 /* ---------- */
 
 /* Середина */
@@ -2866,6 +2882,10 @@ input[type=password]:focus::placeholder {
   font-size: 0.8125rem;
   color: #fff;
   padding: 0.375rem;
+}
+
+.footer__bottom a:hover {
+  color: #4b8ef4;
 }
 
 /* ---------- */
