@@ -3721,11 +3721,11 @@ document.addEventListener('DOMContentLoaded', function () {
   /* В БАННЕРЕ */
 
   var rateSlider = tns({
-    container: '.rate-mini-slider',
+    container: ".rate-mini-slider",
     items: 2,
-    slideBy: '1',
+    slideBy: "1",
     controls: 0,
-    navPosition: 'bottom',
+    navPosition: "bottom",
     responsive: {
       280: {
         items: 2
@@ -3750,8 +3750,8 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ТРЕНДЫ */
 
   var trandsMenuSlider = tns({
-    container: '.tr-tit-menu-slider',
-    preventScrollOnTouch: 'auto',
+    container: ".tr-tit-menu-slider",
+    preventScrollOnTouch: "auto",
     items: 3,
     controls: 0,
     nav: false,
@@ -3759,12 +3759,12 @@ document.addEventListener('DOMContentLoaded', function () {
     loop: false
   });
   var trandsSlider = tns({
-    container: '.trends-slider',
-    preventScrollOnTouch: 'auto',
+    container: ".trends-slider",
+    preventScrollOnTouch: "auto",
     items: 2,
     slideBy: 2,
     controls: 0,
-    navPosition: 'bottom',
+    navPosition: "bottom",
     gutter: 8,
     responsive: {
       280: {
@@ -3793,13 +3793,13 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ОТЗЫВЫ */
 
   var reviewsSlider = tns({
-    container: '.reviews-slider',
-    preventScrollOnTouch: 'auto',
+    container: ".reviews-slider",
+    preventScrollOnTouch: "auto",
     items: 1,
-    slideBy: '1',
+    slideBy: "1",
     controls: 0,
     gutter: 10,
-    navPosition: 'bottom',
+    navPosition: "bottom",
     responsive: {
       280: {
         items: 1
@@ -3817,6 +3817,7 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- */
 
   // КОНЕЦ БЛОКА «SLDIERS» ==========
+
   // БЛОК «FAQ»
 
   /* Основа */
