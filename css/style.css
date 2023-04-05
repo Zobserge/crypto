@@ -2199,13 +2199,8 @@ input[type=password]:focus::placeholder {
 /* Название блока */
 
 .process__steps {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
   gap: 0.625rem;
 }
 
@@ -2488,6 +2483,25 @@ input[type=password]:focus::placeholder {
   background-position: center;
 }
 
+.review__quote {
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@supports (-webkit-line-clamp: 4) {
+  .review__quote {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+}
+
 .review__quote p {
   font-size: 14px;
   color: #fff;
@@ -2527,7 +2541,14 @@ input[type=password]:focus::placeholder {
       -ms-flex-direction: row;
           flex-direction: row;
   margin-top: 1rem;
-  gap: 0.625rem;
+}
+
+.app__btns > * {
+  margin-right: 1rem;
+}
+
+.app__btns > *:last-child {
+  margin-right: 0;
 }
 
 .app-btn {
@@ -2599,27 +2620,22 @@ input[type=password]:focus::placeholder {
 /* Карточки вопросов */
 
 .faq__items {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.faq-col {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0.625rem;
 }
 
 .faq__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border: 1px solid #42464C;
   padding: 0.5rem;
   border-radius: 0.25rem;
@@ -2650,7 +2666,7 @@ input[type=password]:focus::placeholder {
 }
 
 .faq-title p {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #fff;
   margin-right: 0.5rem;
@@ -2677,6 +2693,11 @@ input[type=password]:focus::placeholder {
 
 .faq-text {
   display: none;
+}
+
+.faq-text p {
+  font-size: 12px;
+  margin-top: 0.5rem;
 }
 
 .f-t-open {
@@ -2757,7 +2778,14 @@ input[type=password]:focus::placeholder {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 0.625rem;
+}
+
+.footer__social .social__col > * {
+  margin-right: 0.5rem;
+}
+
+.footer__social .social__col > *:last-child {
+  margin-right: 0;
 }
 
 .footer__social .social__col a {
@@ -3029,7 +3057,13 @@ input[type=password]:focus::placeholder {
 
   .faq-title p {
     font-size: calc(
-		16px + 8 * (100vw - 280px) / (1600 - 280)
+		14px + 8 * (100vw - 280px) / (1600 - 280)
+	  );
+  }
+
+  .faq-text p {
+    font-size: calc(
+		12px + 4 * (100vw - 280px) / (1600 - 280)
 	  );
   }
 
@@ -3239,19 +3273,7 @@ input[type=password]:focus::placeholder {
   }
 
   .process__steps {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
-
-  .step-item {
-    width: 46%;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .reason__item {
@@ -3400,13 +3422,7 @@ input[type=password]:focus::placeholder {
     padding: 2rem 1rem;
   }
 
-  .process__steps {
-    -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
-  }
-
   .step-item {
-    width: auto;
     padding: 2.625rem 1.5rem;
   }
 
@@ -3506,6 +3522,10 @@ input[type=password]:focus::placeholder {
     background-size: cover;
   }
 
+  .process__steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   .choose__left {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 auto;
@@ -3532,16 +3552,7 @@ input[type=password]:focus::placeholder {
   }
 
   .faq__items {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    gap: 1.5rem;
-  }
-
-  .faq-col {
-    width: 50%;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .footer {
@@ -3586,7 +3597,7 @@ input[type=password]:focus::placeholder {
 
   .b6pdtb {
     padding-top: 15rem;
-    padding-bottom: 15rem;
+    padding-bottom: 8.75rem;
   }
 
   .app__left {
@@ -3723,7 +3734,11 @@ input[type=password]:focus::placeholder {
   }
 
   .faq-title p {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .faq-text p {
+    font-size: 16px;
   }
 
   .menu-col a {

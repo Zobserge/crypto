@@ -3822,12 +3822,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* Основа */
 
-  var faqItems = document.querySelectorAll('.faq__item');
+  var faqItems = document.querySelectorAll(".faq__item");
   faqItems.forEach(function (faqItem) {
-    faqItem.addEventListener('click', function () {
+    faqItem.addEventListener("click", function () {
       var faqCloseIc = faqItem.firstElementChild.lastElementChild;
-      faqItem.lastElementChild.classList.toggle('f-t-open');
-      faqCloseIc.classList.toggle('ic-rot');
+      faqItem.lastElementChild.classList.toggle("f-t-open");
+      faqCloseIc.classList.toggle("ic-rot");
     });
   });
 
