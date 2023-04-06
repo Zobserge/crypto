@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
     myFunction();
   };
   var header = document.querySelector(".header");
-  var headerWrap = document.querySelector(".first-screen");
+  var headerWrap = document.querySelector('.first-screen');
   var sticky = header.offsetTop;
   function myFunction() {
     if (window.pageYOffset > sticky) {
@@ -234,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
       headerWrap.classList.remove("b-p");
     }
   }
+  ;
 
   /* ---------- */
 
@@ -251,7 +252,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // }
 
   // КОНЕЦ ШАПКА ПРИ СКРОЛЕ ==========
-
   // АНИМАЦИИ
 
   var wow = new WOW({
@@ -3518,11 +3518,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* InputMask */
 
-  var inputMask = new Inputmask('+7(999)999-99-99');
-  var inpPhones = document.querySelectorAll('input[type="tel"]');
-  inpPhones.forEach(function (phone) {
-    inputMask.mask(phone);
-  });
+  // const inputMask = new Inputmask('+7(999)999-99-99');
+
+  // let inpPhones = document.querySelectorAll('input[type="tel"]');
+  // inpPhones.forEach((phone) => {
+  // 	inputMask.mask(phone)
+  // })
 
   /* ---------- */
 
@@ -3555,23 +3556,22 @@ document.addEventListener('DOMContentLoaded', function () {
     rule: 'maxLength',
     value: 15,
     errorMessage: 'Максимум 15'
-  }]).addField('.input-phone', [{
-    rule: 'required',
-    value: true,
-    errorMessage: 'Введите телефон'
-  }, {
-    validator: function validator() {
-      var phone = orderCallPhoneInput.inputmask.unmaskedvalue();
-      return phone.length === 10;
-    },
-    errorMessage: 'Короткий номер'
-  }]).addField('.input-email', [{
-    rule: 'required',
-    errorMessage: 'Введите email'
-  }, {
-    rule: 'email',
-    errorMessage: 'Неправильно введен email'
-  }]).onSuccess(function (event) {
+  }])
+  // .addField('.input-phone', [
+  // 	{
+  // 		rule: 'required',
+  // 		value: true,
+  // 		errorMessage: 'Введите телефон',
+  // 	},
+  // 	{
+  // 		validator: () => {
+  // 			const phone = orderCallPhoneInput.inputmask.unmaskedvalue();
+  // 			return phone.length === 10;
+  // 		},
+  // 		errorMessage: 'Короткий номер',
+  // 	}
+  // ])
+  .onSuccess(function (event) {
     // console.log('Validation passes and form submitted', event);
 
     var formData = new FormData(event.target);
@@ -3668,6 +3668,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var block3Anchor = Array.prototype.slice.call(document.querySelectorAll('.b3-ancr'));
   var block4Anchor = Array.prototype.slice.call(document.querySelectorAll('.b4-ancr'));
   var block5Anchor = Array.prototype.slice.call(document.querySelectorAll('.b5-ancr'));
+  var block6Anchor = Array.prototype.slice.call(document.querySelectorAll('.b6-ancr'));
 
   /* ---------- */
 
@@ -3696,40 +3697,134 @@ document.addEventListener('DOMContentLoaded', function () {
       smoothScroll('.b5-tr', 1000);
     });
   });
+  block6Anchor.forEach(function (el) {
+    el.addEventListener('click', function () {
+      smoothScroll('.b6-tr', 1000);
+    });
+  });
 
   /* ---------- */
 
   // КОНЕЦ ЯКОРЕЙ ==========
 
-  // БЛОК «СЛАЙДЕРЫ»
+  // БЛОК «SLDIERS»
 
-  /* Первый экран */
+  /* В БАННЕРЕ */
 
-  var sliderBanner = tns({
-    container: '.bn-slider',
-    items: 1,
-    slideBy: 1,
-    controls: 1,
-    nav: false,
-    gutter: 10,
-    preventScrollOnTouch: 'auto',
-    prevButton: '.bn--prev',
-    nextButton: '.bn--next'
+  var rateSlider = tns({
+    container: ".rate-mini-slider",
+    items: 2,
+    slideBy: "1",
+    controls: 0,
+    navPosition: "bottom",
+    responsive: {
+      280: {
+        items: 2
+      },
+      375: {
+        items: 3
+      },
+      576: {
+        items: 4
+      },
+      768: {
+        items: 5
+      },
+      992: {
+        items: 6
+      }
+    }
   });
 
   /* ---------- */
 
-  /* Отзывы */
-  var reviewBanner = tns({
-    container: '.reviews-slider',
-    items: 1,
-    slideBy: 1,
-    controls: 1,
-    preventScrollOnTouch: 'auto',
+  /* ТРЕНДЫ */
+
+  var trandsMenuSlider = tns({
+    container: ".tr-tit-menu-slider",
+    preventScrollOnTouch: "auto",
+    items: 3,
+    controls: 0,
     nav: false,
-    prevButton: '.rw--prev',
-    nextButton: '.rw--next'
+    autoWidth: true,
+    loop: false
   });
+  var trandsSlider = tns({
+    container: ".trends-slider",
+    preventScrollOnTouch: "auto",
+    items: 2,
+    slideBy: 2,
+    controls: 0,
+    navPosition: "bottom",
+    gutter: 8,
+    responsive: {
+      280: {
+        items: 2
+      },
+      375: {
+        items: 3
+      },
+      576: {
+        items: 4
+      },
+      768: {
+        items: 5
+      },
+      998: {
+        items: 6
+      },
+      1366: {
+        gutter: 24
+      }
+    }
+  });
+
+  /* ---------- */
+
+  /* ОТЗЫВЫ */
+
+  var reviewsSlider = tns({
+    container: ".reviews-slider",
+    preventScrollOnTouch: "auto",
+    items: 1,
+    slideBy: "1",
+    controls: 0,
+    gutter: 10,
+    navPosition: "bottom",
+    responsive: {
+      280: {
+        items: 1
+      },
+      576: {
+        items: 2
+      },
+      1600: {
+        items: 3,
+        fixedWidth: 645
+      }
+    }
+  });
+
+  /* ---------- */
+
+  // КОНЕЦ БЛОКА «SLDIERS» ==========
+
+  // БЛОК «FAQ»
+
+  /* Основа */
+
+  var faqItems = document.querySelectorAll(".faq__item");
+  faqItems.forEach(function (faqItem) {
+    faqItem.addEventListener("click", function () {
+      var faqCloseIc = faqItem.firstElementChild.lastElementChild;
+      faqItem.lastElementChild.classList.toggle("f-t-open");
+      faqCloseIc.classList.toggle("ic-rot");
+    });
+  });
+
+  /* ---------- */
+
+  /* Название блока */
 
   /* ---------- */
 
@@ -3737,5 +3832,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- */
 
-  // КОНЕЦ БЛОКА «СЛАЙДЕРЫ» ==========
+  // КОНЕЦ БЛОКА «FAQ» ==========
 });
