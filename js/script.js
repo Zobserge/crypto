@@ -11,40 +11,54 @@ document.addEventListener('DOMContentLoaded', function () {
   // На viewport больше 1320 добавляет
   // На viewport меньше 992 убирает
 
-  var popupBodys = Array.prototype.slice.call(document.querySelectorAll('.popup__body'));
-  var btnUp = document.querySelector('.btnUp-container');
-  var mainHeader = document.querySelector('.header');
-  function paddingRight() {
+  var popupBodys = Array.prototype.slice.call(document.querySelectorAll(".popup__body"));
+  var btnUp = document.querySelector(".btnUp-container");
+  var mainHeader = document.querySelector(".header");
+
+  // // получаем ширину экрана без скролбара
+  // const documentWidth = document.documentElement.clientWidth;
+  // // получаем ширину скролбара
+  // const scrollBarWidth = Math.abs(window.innerWidth - documentWidth);
+  // document.body.style.setProperty("padding-right", `${scrollBarWidth}px`);
+
+  function addPaddingRight() {
     var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    if (viewportWidth >= 1400) {
-      document.body.classList.add('pad-r');
-      if (mainHeader.classList.contains('header--fixed')) {
-        mainHeader.classList.add('pad-r');
-      } else {
-        mainHeader.classList.remove('pad-r');
+
+    // тут я мудрю чтобы выбрать все браузеры кроме safairi т.к. paddingRight задаю всем, кроме него
+
+    function getUAString() {
+      var uaData = navigator.userAgentData;
+      if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+        return uaData.brands.map(function (item) {
+          return item.brand + "/" + item.version;
+        }).join(" ");
       }
-      ;
-      btnUp.classList.add('pad-r');
-      popupBodys.forEach(function (item) {
-        item.classList.add('mar-l');
-      });
+      return navigator.userAgent;
     }
-    if (viewportWidth <= 992) {
-      document.body.classList.remove('pad-r');
-      mainHeader.classList.remove('pad-r');
-      btnUp.classList.remove('pad-r');
-      popupBodys.forEach(function (item) {
-        item.classList.remove('mar-l');
-      });
+    function isLayoutViewport() {
+      return !/^((?!chrome|android).)*safari/i.test(getUAString());
+    }
+
+    // все браузеры кроме safari и ie
+    var isFirefox = /firefox/i.test(getUAString());
+    if (isLayoutViewport() && isFirefox || isLayoutViewport()) {
+      if (viewportWidth >= 1200) {
+        document.body.classList.add("pad-r");
+        if (mainHeader.classList.contains("header--fixed")) {
+          mainHeader.classList.add("pad-r");
+        } else {
+          mainHeader.classList.remove("pad-r");
+        }
+      }
+      if (viewportWidth < 1200) {
+        document.body.classList.remove("pad-r");
+        mainHeader.classList.remove("pad-r");
+      }
     }
   }
   function removePaddingRight() {
-    document.body.classList.remove('pad-r');
-    mainHeader.classList.remove('pad-r');
-    btnUp.classList.remove('pad-r');
-    popupBodys.forEach(function (item) {
-      item.classList.remove('mar-l');
-    });
+    document.body.classList.remove("pad-r");
+    mainHeader.classList.remove("pad-r");
   }
 
   /* ---------- */
@@ -55,21 +69,21 @@ document.addEventListener('DOMContentLoaded', function () {
     var triggers = Array.prototype.slice.call(document.querySelectorAll(triggerSelector));
     var modal = document.querySelector(modalSelector);
     var btnsClose = Array.prototype.slice.call(document.querySelectorAll(closeSelector));
-    var popBodys = document.querySelectorAll('.popup__body');
+    var popBodys = document.querySelectorAll(".popup__body");
 
     // Кнопки закрытия модалок
     btnsClose.forEach(function (item) {
-      item.addEventListener('click', closeModal);
+      item.addEventListener("click", closeModal);
     });
 
     // Кнопки открывающие модалки
     triggers.forEach(function (item) {
-      item.addEventListener('click', openModal);
+      item.addEventListener("click", openModal);
     });
 
     // Закрытие формы при нажатии на фон вокруг формы
     popupBodys.forEach(function (item) {
-      item.addEventListener('click', function (e) {
+      item.addEventListener("click", function (e) {
         if (e.target === item) {
           closeModal();
         }
@@ -77,43 +91,41 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Закрытие формы при нажатии ESC
-    document.body.addEventListener('keyup', function (e) {
+    document.body.addEventListener("keyup", function (e) {
       var key = e.keyCode;
       if (key == 27) {
         closeModal();
       }
-      ;
     }, false);
 
     // Основная функция открывашка
     function openModal() {
-      // «visible and opacity 1» — лежит в popupsAndForms.css 
-      modal.classList.add('cond-vis');
-      modal.classList.add('cond-opa');
+      // «visible and opacity 1» — лежит в popupsAndForms.css
+      modal.classList.add("cond-vis");
+      modal.classList.add("cond-opa");
       popBodys.forEach(function (popBody) {
         // «анимация сдвиг сверху на форму при октрытии» — лежит в popupsAndForms.css
-        popBody.classList.add('anim-OpenPopup');
+        popBody.classList.add("anim-OpenPopup");
       });
       // «overflow-hidden» — лежит в structure.scss
-      document.body.classList.add('ov-h');
-      paddingRight();
+      document.body.classList.add("ov-h");
+      addPaddingRight();
     }
 
     // Основная функция закрывашка
     function closeModal() {
       popBodys.forEach(function (popBody) {
-        popBody.classList.remove('anim-OpenPopup');
+        popBody.classList.remove("anim-OpenPopup");
       });
       setTimeout(function () {
-        modal.classList.remove('cond-vis');
+        modal.classList.remove("cond-vis");
       }, 440);
-      modal.classList.remove('cond-opa');
+      modal.classList.remove("cond-opa");
       setTimeout(function () {
-        document.body.classList.remove('ov-h');
+        document.body.classList.remove("ov-h");
         removePaddingRight();
       }, 300);
     }
-    ;
   }
 
   /* ---------- */
@@ -121,78 +133,61 @@ document.addEventListener('DOMContentLoaded', function () {
   /* Создаем модальные окна */
 
   // Кнопка в шапке
-  bindModal('.header__call-btn', '.popup-callback', '.popup-close');
+  bindModal(".header__call-btn", ".popup-callback", ".popup-close");
 
-  // Кнопка в шапке
-  bindModal('.nav__call-btn', '.popup-callback', '.popup-close');
+  // Кнопка в баннере
+  bindModal(".bnr-btn-call", ".popup-callback", ".popup-close");
+
+  // Кнопка в меню справа
+  bindModal(".offcanvas__call-btn", ".popup-callback", ".popup-close");
+
+  // Кнопка вызывающая попап с текстовым контентом
+  bindModal(".pop-info-btn", ".popup-info", ".popup-close");
 
   /* ---------- */
 
   // ПОПАПЫ И ФОРМЫ ==========
+
   // МЕНЮ С ПРАВОЙ СТОРОНЫ ЭКРАНА
 
   /* Меню, которое появляется справа */
 
-  var navIcon = document.querySelector('.navbar-toggle');
-  var navOffcanvasCloseBtn = document.querySelector('.nav-close-btn');
-  var navOffcanvas = document.querySelector('.nav-offcanvas');
-  var navOffcanvasContainer = document.querySelector('.nav-offcanvas__container');
-  var navOffcanvasItems = Array.prototype.slice.call(document.querySelectorAll('.nav-offcanvas span'));
+  var navIcon = document.querySelector(".navbar-toggle");
+  var navOffcanvasCloseBtn = document.querySelector(".ofcnvs-close-btn");
+  var navOffcanvas = document.querySelector(".offcanvas");
+  var navOffcanvasContainer = document.querySelector(".offcanvas__container");
+  var navOffcanvasItems = Array.prototype.slice.call(document.querySelectorAll(".offcanvas__elements span"));
 
   // Кнопка в шапке, которая открывает меню справа
-  navIcon.addEventListener('click', function () {
-    navOffcanvas.classList.add('cond-vis');
-    navOffcanvas.classList.add('cond-opa');
+  navIcon.addEventListener("click", function () {
+    navOffcanvas.classList.add("cond-vis");
+    navOffcanvas.classList.add("cond-opa");
 
     // navOffcanvasContainer.classList.add('cond-opa');
 
-    navOffcanvasContainer.classList.add('anim-RightShiftNav');
-    document.body.classList.add('ov-h');
-    addPaddingRightNav(); // В файле popups.js
+    navOffcanvasContainer.classList.add("anim-RightShiftNav");
+    document.body.classList.add("ov-h");
+    addPaddingRight(); // В файле popupsAndForms.js
   });
-
-  function addPaddingRightNav() {
-    var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    if (viewportWidth >= 1400) {
-      document.body.classList.add('pad-r');
-      if (mainHeader.classList.contains('header--fixed')) {
-        mainHeader.classList.add('pad-r');
-      } else {
-        mainHeader.classList.remove('pad-r');
-      }
-      ;
-      btnUp.classList.add('pad-r');
-    }
-    if (viewportWidth <= 992) {
-      document.body.classList.remove('pad-r');
-      mainHeader.classList.remove('pad-r');
-      btnUp.classList.remove('pad-r');
-    }
-  }
-  function removePaddingRightNav() {
-    document.body.classList.remove('pad-r');
-    mainHeader.classList.remove('pad-r');
-    btnUp.classList.remove('pad-r');
-  }
 
   // Основная функция закрытия блока
   function closeNav() {
-    navOffcanvasContainer.classList.remove('anim-RightShiftNav');
+    navOffcanvasContainer.classList.remove("anim-RightShiftNav");
     setTimeout(function () {
-      navOffcanvas.classList.remove('cond-vis');
+      navOffcanvas.classList.remove("cond-vis");
     }, 300);
-    navOffcanvas.classList.remove('cond-opa');
-    removePaddingRightNav();
-    document.body.classList.remove('ov-h');
+    navOffcanvas.classList.remove("cond-opa");
+    removePaddingRight();
+    document.body.classList.remove("ov-h");
   }
 
   // Кнопка закрытия в меню справа
-  navOffcanvasCloseBtn.addEventListener('click', function () {
+  navOffcanvasCloseBtn.addEventListener("click", function () {
     closeNav();
   });
 
   // Закрытие меню при нажатии на фон
-  navOffcanvas.addEventListener('click', function (e) {
+  navOffcanvas.addEventListener("click", function (e) {
     if (e.target === navOffcanvas) {
       closeNav();
     }
@@ -200,30 +195,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // При нажатии на пункт меню, оно закрывается
   navOffcanvasItems.forEach(function (item) {
-    item.addEventListener('click', closeNav);
+    item.addEventListener("click", closeNav);
   });
 
   /* ---------- */
 
   /* Кнопка заявки в меню справа */
 
-  // const navOffcanvasCallBtn = document.querySelector('.nav-offcanvas__call-btn');
-
-  // navOffcanvasCallBtn.addEventListener('click', function() {
-
-  // 	navOffcanvasContainer.classList.remove('anim-RightShiftNav');
-
-  // 	setTimeout(() => {
-  // 		navOffcanvas.classList.remove('cond-vis');
-  // 	}, 300)
-
-  // 	navOffcanvas.classList.remove('cond-opa');
-
-  // });
+  var navOffcanvasCallBtn = document.querySelector(".offcanvas__call-btn");
+  navOffcanvasCallBtn.addEventListener("click", function () {
+    navOffcanvasContainer.classList.remove("anim-RightShiftNav");
+    setTimeout(function () {
+      navOffcanvas.classList.remove("cond-vis");
+    }, 300);
+    navOffcanvas.classList.remove("cond-opa");
+  });
 
   /* ---------- */
 
   // МЕНЮ С ПРАВОЙ СТОРОНЫ ЭКРАНА ==========
+
   // ШАПКА ПРИ СКРОЛЕ
 
   /* Появляется при скроле вниз */
@@ -232,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
     myFunction();
   };
   var header = document.querySelector(".header");
-  var headerWrap = document.querySelector('.first-screen');
+  var headerWrap = document.querySelector(".first-screen");
   var sticky = header.offsetTop;
   function myFunction() {
     if (window.pageYOffset > sticky) {
@@ -243,7 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
       headerWrap.classList.remove("b-p");
     }
   }
-  ;
 
   /* ---------- */
 
@@ -261,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // }
 
   // КОНЕЦ ШАПКА ПРИ СКРОЛЕ ==========
+
   // АНИМАЦИИ
 
   var wow = new WOW({
@@ -3527,12 +3518,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* InputMask */
 
-  // const inputMask = new Inputmask('+7(999)999-99-99');
-
-  // let inpPhones = document.querySelectorAll('input[type="tel"]');
-  // inpPhones.forEach((phone) => {
-  // 	inputMask.mask(phone)
-  // })
+  var inputMask = new Inputmask('+7(999)999-99-99');
+  var inpPhones = document.querySelectorAll('input[type="tel"]');
+  inpPhones.forEach(function (phone) {
+    inputMask.mask(phone);
+  });
 
   /* ---------- */
 
@@ -3565,22 +3555,23 @@ document.addEventListener('DOMContentLoaded', function () {
     rule: 'maxLength',
     value: 15,
     errorMessage: 'Максимум 15'
-  }])
-  // .addField('.input-phone', [
-  // 	{
-  // 		rule: 'required',
-  // 		value: true,
-  // 		errorMessage: 'Введите телефон',
-  // 	},
-  // 	{
-  // 		validator: () => {
-  // 			const phone = orderCallPhoneInput.inputmask.unmaskedvalue();
-  // 			return phone.length === 10;
-  // 		},
-  // 		errorMessage: 'Короткий номер',
-  // 	}
-  // ])
-  .onSuccess(function (event) {
+  }]).addField('.input-phone', [{
+    rule: 'required',
+    value: true,
+    errorMessage: 'Введите телефон'
+  }, {
+    validator: function validator() {
+      var phone = orderCallPhoneInput.inputmask.unmaskedvalue();
+      return phone.length === 10;
+    },
+    errorMessage: 'Короткий номер'
+  }]).addField('.input-email', [{
+    rule: 'required',
+    errorMessage: 'Введите email'
+  }, {
+    rule: 'email',
+    errorMessage: 'Неправильно введен email'
+  }]).onSuccess(function (event) {
     // console.log('Validation passes and form submitted', event);
 
     var formData = new FormData(event.target);
@@ -3677,7 +3668,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var block3Anchor = Array.prototype.slice.call(document.querySelectorAll('.b3-ancr'));
   var block4Anchor = Array.prototype.slice.call(document.querySelectorAll('.b4-ancr'));
   var block5Anchor = Array.prototype.slice.call(document.querySelectorAll('.b5-ancr'));
-  var block6Anchor = Array.prototype.slice.call(document.querySelectorAll('.b6-ancr'));
 
   /* ---------- */
 
@@ -3706,134 +3696,40 @@ document.addEventListener('DOMContentLoaded', function () {
       smoothScroll('.b5-tr', 1000);
     });
   });
-  block6Anchor.forEach(function (el) {
-    el.addEventListener('click', function () {
-      smoothScroll('.b6-tr', 1000);
-    });
-  });
 
   /* ---------- */
 
   // КОНЕЦ ЯКОРЕЙ ==========
 
-  // БЛОК «SLDIERS»
+  // БЛОК «СЛАЙДЕРЫ»
 
-  /* В БАННЕРЕ */
+  /* Первый экран */
 
-  var rateSlider = tns({
-    container: ".rate-mini-slider",
-    items: 2,
-    slideBy: "1",
-    controls: 0,
-    navPosition: "bottom",
-    responsive: {
-      280: {
-        items: 2
-      },
-      375: {
-        items: 3
-      },
-      576: {
-        items: 4
-      },
-      768: {
-        items: 5
-      },
-      992: {
-        items: 6
-      }
-    }
-  });
-
-  /* ---------- */
-
-  /* ТРЕНДЫ */
-
-  var trandsMenuSlider = tns({
-    container: ".tr-tit-menu-slider",
-    preventScrollOnTouch: "auto",
-    items: 3,
-    controls: 0,
-    nav: false,
-    autoWidth: true,
-    loop: false
-  });
-  var trandsSlider = tns({
-    container: ".trends-slider",
-    preventScrollOnTouch: "auto",
-    items: 2,
-    slideBy: 2,
-    controls: 0,
-    navPosition: "bottom",
-    gutter: 8,
-    responsive: {
-      280: {
-        items: 2
-      },
-      375: {
-        items: 3
-      },
-      576: {
-        items: 4
-      },
-      768: {
-        items: 5
-      },
-      998: {
-        items: 6
-      },
-      1366: {
-        gutter: 24
-      }
-    }
-  });
-
-  /* ---------- */
-
-  /* ОТЗЫВЫ */
-
-  var reviewsSlider = tns({
-    container: ".reviews-slider",
-    preventScrollOnTouch: "auto",
+  var sliderBanner = tns({
+    container: '.bn-slider',
     items: 1,
-    slideBy: "1",
-    controls: 0,
+    slideBy: 1,
+    controls: 1,
+    nav: false,
     gutter: 10,
-    navPosition: "bottom",
-    responsive: {
-      280: {
-        items: 1
-      },
-      576: {
-        items: 2
-      },
-      1600: {
-        items: 3,
-        fixedWidth: 645
-      }
-    }
+    preventScrollOnTouch: 'auto',
+    prevButton: '.bn--prev',
+    nextButton: '.bn--next'
   });
 
   /* ---------- */
 
-  // КОНЕЦ БЛОКА «SLDIERS» ==========
-
-  // БЛОК «FAQ»
-
-  /* Основа */
-
-  var faqItems = document.querySelectorAll(".faq__item");
-  faqItems.forEach(function (faqItem) {
-    faqItem.addEventListener("click", function () {
-      var faqCloseIc = faqItem.firstElementChild.lastElementChild;
-      faqItem.lastElementChild.classList.toggle("f-t-open");
-      faqCloseIc.classList.toggle("ic-rot");
-    });
+  /* Отзывы */
+  var reviewBanner = tns({
+    container: '.reviews-slider',
+    items: 1,
+    slideBy: 1,
+    controls: 1,
+    preventScrollOnTouch: 'auto',
+    nav: false,
+    prevButton: '.rw--prev',
+    nextButton: '.rw--next'
   });
-
-  /* ---------- */
-
-  /* Название блока */
 
   /* ---------- */
 
@@ -3841,5 +3737,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ---------- */
 
-  // КОНЕЦ БЛОКА «FAQ» ==========
+  // КОНЕЦ БЛОКА «СЛАЙДЕРЫ» ==========
 });
